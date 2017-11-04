@@ -51,13 +51,14 @@ namespace std{
 #include <boost/archive/codecvt_null.hpp>
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/detail/auto_link_archive.hpp>
+#include <boost/archive/detail/impl_traits_oarchive.hpp>
 #include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
 namespace boost {
 namespace archive {
 
 /////////////////////////////////////////////////////////////////////////
-// class basic_binary_oprimitive - binary output of prmitives
+// class basic_binary_oprimitive - binary output of primitives
 
 template<class Archive, class Elem, class Tr>
 class BOOST_SYMBOL_VISIBLE basic_binary_oprimitive {
@@ -69,8 +70,8 @@ public:
 #endif
     std::basic_streambuf<Elem, Tr> & m_sb;
     // return a pointer to the most derived class
-    Archive * This(){
-        return static_cast<Archive *>(this);
+    typename impl_traits_oarchive<Archive>::type * This(){
+        return static_cast<typename impl_traits_oarchive<Archive>::type *>(this);
     }
     #ifndef BOOST_NO_STD_LOCALE
     // note order! - if you change this, libstd++ will fail!

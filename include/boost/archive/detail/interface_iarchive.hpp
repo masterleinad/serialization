@@ -21,6 +21,7 @@
 #include <boost/archive/detail/auto_link_archive.hpp>
 #include <boost/archive/detail/iserializer.hpp>
 #include <boost/archive/detail/helper_collection.hpp>
+#include <boost/archive/detail/impl_traits_iarchive.hpp>
 #include <boost/serialization/singleton.hpp>
 #include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
@@ -42,8 +43,8 @@ public:
     typedef mpl::bool_<false> is_saving;
 
     // return a pointer to the most derived class
-    Archive * This(){
-        return static_cast<Archive *>(this);
+    typename impl_traits_iarchive<Archive>::type * This(){
+        return static_cast<typename impl_traits_iarchive<Archive>::type *>(this);
     }
 
     template<class T>
@@ -64,14 +65,14 @@ public:
     }
     
     template<class T>
-    Archive & operator>>(T & t){
+    typename impl_traits_iarchive<Archive>::type & operator>>(T & t){
         this->This()->load_override(t);
         return * this->This();
     }
 
     // the & operator 
     template<class T>
-    Archive & operator&(T & t){
+    typename impl_traits_iarchive<Archive>::type & operator&(T & t){
         return *(this->This()) >> t;
     }
 };

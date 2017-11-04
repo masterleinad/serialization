@@ -67,6 +67,7 @@
 #include <boost/archive/detail/basic_pointer_oserializer.hpp>
 #include <boost/archive/detail/archive_serializer_map.hpp>
 #include <boost/archive/detail/check.hpp>
+#include <boost/archive/detail/impl_traits_oarchive.hpp>
 
 namespace boost {
 
@@ -216,12 +217,12 @@ pointer_oserializer<Archive, T>::pointer_oserializer() :
     boost::serialization::singleton<
         oserializer<Archive, T> 
     >::get_mutable_instance().set_bpos(this);
-    archive_serializer_map<Archive>::insert(this);
+    archive_serializer_map<typename impl_traits_oarchive<Archive>::type>::insert(this);
 }
 
 template<class Archive, class T>
 pointer_oserializer<Archive, T>::~pointer_oserializer(){
-    archive_serializer_map<Archive>::erase(this);
+    archive_serializer_map<typename impl_traits_oarchive<Archive>::type>::erase(this);
 }
 
 template<class Archive>
