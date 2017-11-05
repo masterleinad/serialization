@@ -70,8 +70,8 @@ public:
 #endif
     std::basic_streambuf<Elem, Tr> & m_sb;
     // return a pointer to the most derived class
-    typename impl_traits_oarchive<Archive>::type * This(){
-        return static_cast<typename impl_traits_oarchive<Archive>::type *>(this);
+    typename detail::impl_traits_oarchive<Archive>::type * This(){
+        return static_cast<typename detail::impl_traits_oarchive<Archive>::type *>(this);
     }
     #ifndef BOOST_NO_STD_LOCALE
     // note order! - if you change this, libstd++ will fail!

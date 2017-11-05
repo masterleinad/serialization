@@ -88,6 +88,7 @@ namespace std{
 #include <boost/archive/detail/basic_pointer_iserializer.hpp>
 #include <boost/archive/detail/archive_serializer_map.hpp>
 #include <boost/archive/detail/check.hpp>
+#include <boost/archive/detail/impl_traits_iarchive.hpp>
 
 namespace boost {
 
@@ -366,12 +367,12 @@ pointer_iserializer<Archive, T>::pointer_iserializer() :
     boost::serialization::singleton<
         iserializer<Archive, T>
     >::get_mutable_instance().set_bpis(this);
-    archive_serializer_map<Archive>::insert(this);
+    archive_serializer_map<typename impl_traits_iarchive<Archive>::type>::insert(this);
 }
 
 template<class Archive, class T>
 pointer_iserializer<Archive, T>::~pointer_iserializer(){
-    archive_serializer_map<Archive>::erase(this);
+    archive_serializer_map<typename impl_traits_iarchive<Archive>::type>::erase(this);
 }
 
 template<class Archive>
@@ -530,7 +531,7 @@ struct load_pointer_type {
     static const basic_pointer_iserializer *
     find(const boost::serialization::extended_type_info & type){
         return static_cast<const basic_pointer_iserializer *>(
-            archive_serializer_map<Archive>::find(type)
+            archive_serializer_map<typename impl_traits_iarchive<Archive>::type>::find(type)
         );
     }
 
