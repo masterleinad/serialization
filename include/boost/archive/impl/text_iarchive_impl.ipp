@@ -95,13 +95,13 @@ text_iarchive_impl<Archive>::load(std::wstring &ws)
 template<class Archive>
 BOOST_ARCHIVE_DECL void
 text_iarchive_impl<Archive>::load_override(class_name_type & t){
-    basic_text_iarchive<Archive>::load_override(t);
+    basic_text_iarchive<text_iarchive_impl<Archive> >::load_override(t);
 }
 
 template<class Archive>
 BOOST_ARCHIVE_DECL void
 text_iarchive_impl<Archive>::init(){
-    basic_text_iarchive<Archive>::init();
+    basic_text_iarchive<text_iarchive_impl<Archive> >::init();
 }
 
 template<class Archive>
@@ -114,13 +114,13 @@ text_iarchive_impl<Archive>::text_iarchive_impl(
         is, 
         0 != (flags & no_codecvt)
     ),
-    basic_text_iarchive<Archive>(flags)
+    basic_text_iarchive<text_iarchive_impl<Archive> >(flags)
 {
     if(0 == (flags & no_header))
         #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3205))
         this->init();
         #else
-        this->basic_text_iarchive<Archive>::init();
+        this->basic_text_iarchive<text_iarchive_impl<Archive> >::init();
         #endif
 }
 

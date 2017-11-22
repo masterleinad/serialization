@@ -91,13 +91,13 @@ text_oarchive_impl<Archive>::text_oarchive_impl(
         os, 
         0 != (flags & no_codecvt)
     ),
-    basic_text_oarchive<Archive>(flags)
+    basic_text_oarchive<text_oarchive_impl<Archive> >(flags)
 {
     if(0 == (flags & no_header))
         #if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3205))
         this->init();
         #else
-        this->basic_text_oarchive<Archive>::init();
+        this->basic_text_oarchive<text_oarchive_impl<Archive> >::init();
         #endif
 }
 

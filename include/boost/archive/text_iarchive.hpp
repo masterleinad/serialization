@@ -42,13 +42,13 @@ namespace detail {
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE text_iarchive_impl :
     public basic_text_iprimitive<std::istream>,
-    public basic_text_iarchive<Archive>
+    public basic_text_iarchive<text_iarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
 #else
 protected:
-    friend class detail::interface_iarchive<Archive>;
+    friend class detail::interface_iarchive<text_iarchive_impl<Archive> >;
     friend class load_access;
 #endif
     template<class T>
@@ -79,7 +79,7 @@ protected:
     #endif
     template<class T>
     void load_override(T & t){
-        basic_text_iarchive<Archive>::load_override(t);
+        basic_text_iarchive<text_iarchive_impl<Archive> >::load_override(t);
     }
     BOOST_ARCHIVE_DECL void
     load_override(class_name_type & t);

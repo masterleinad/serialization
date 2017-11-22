@@ -25,8 +25,8 @@
 namespace boost {
 namespace archive {
 
-template class detail::archive_serializer_map<text_iarchive>;
-template class basic_text_iarchive<text_iarchive> ;
+template class detail::archive_serializer_map<text_iarchive_impl<text_iarchive> >;
+template class basic_text_iarchive<text_iarchive_impl<text_iarchive> >;
 template class text_iarchive_impl<text_iarchive> ;
 
 } // namespace archive

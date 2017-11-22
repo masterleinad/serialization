@@ -49,14 +49,14 @@ namespace detail {
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE text_oarchive_impl :
      /* protected ? */ public basic_text_oprimitive<std::ostream>,
-     public basic_text_oarchive<Archive>
+     public basic_text_oarchive<text_oarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
 #else
 protected:
-    friend class detail::interface_oarchive<Archive>;
-    friend class basic_text_oarchive<Archive>;
+    friend class detail::interface_oarchive<text_oarchive_impl<Archive> >;
+    friend class basic_text_oarchive<text_oarchive_impl<Archive> >;
     friend class save_access;
 #endif
     template<class T>

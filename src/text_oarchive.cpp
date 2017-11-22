@@ -26,8 +26,8 @@ namespace boost {
 namespace archive {
 
 //template class basic_text_oprimitive<std::ostream> ;
-template class detail::archive_serializer_map<text_oarchive>;
-template class basic_text_oarchive<text_oarchive> ;
+template class detail::archive_serializer_map<text_oarchive_impl<text_oarchive> >;
+template class basic_text_oarchive<text_oarchive_impl<text_oarchive> > ;
 template class text_oarchive_impl<text_oarchive> ;
 
 } // namespace serialization
