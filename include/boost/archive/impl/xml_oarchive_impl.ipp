@@ -108,7 +108,7 @@ xml_oarchive_impl<Archive>::xml_oarchive_impl(
         os_,
         0 != (flags & no_codecvt)
     ),
-    basic_xml_oarchive<Archive>(flags)
+    basic_xml_oarchive<xml_oarchive_impl<Archive> >(flags)
 {
     if(0 == (flags & no_header))
         this->init();

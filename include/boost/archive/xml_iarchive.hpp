@@ -46,14 +46,14 @@ typedef basic_xml_grammar<char> xml_grammar;
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE xml_iarchive_impl : 
     public basic_text_iprimitive<std::istream>,
-    public basic_xml_iarchive<Archive>
+    public basic_xml_iarchive<xml_iarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
 #else
 protected:
-    friend class detail::interface_iarchive<Archive>;
-    friend class basic_xml_iarchive<Archive>;
+    friend class detail::interface_iarchive<xml_iarchive_impl<Archive> >;
+    friend class basic_xml_iarchive<xml_iarchive_impl<Archive> >;
     friend class load_access;
 #endif
     // use boost:scoped_ptr to implement automatic deletion;
@@ -92,7 +92,7 @@ protected:
     #endif
     template<class T>
     void load_override(T & t){
-        basic_xml_iarchive<Archive>::load_override(t);
+        basic_xml_iarchive<xml_iarchive_impl<Archive> >::load_override(t);
     }
     BOOST_ARCHIVE_DECL void
     load_override(class_name_type & t);
