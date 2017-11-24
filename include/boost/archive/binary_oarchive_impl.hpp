@@ -35,8 +35,8 @@ namespace detail {
 
 template<class Archive, class Elem, class Tr>
 class BOOST_SYMBOL_VISIBLE binary_oarchive_impl : 
-    public basic_binary_oprimitive<Archive, Elem, Tr>,
-    public basic_binary_oarchive<Archive>
+    public basic_binary_oprimitive<binary_oarchive_impl<Archive, Elem, Tr>, Elem, Tr>,
+    public basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
@@ -45,40 +45,40 @@ protected:
     #if BOOST_WORKAROUND(BOOST_MSVC, < 1500)
         // for some inexplicable reason insertion of "class" generates compile erro
         // on msvc 7.1
-        friend detail::interface_oarchive<Archive>;
-        friend basic_binary_oarchive<Archive>;
+        friend detail::interface_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >;
+        friend basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >;
         friend save_access;
     #else
-        friend class detail::interface_oarchive<Archive>;
-        friend class basic_binary_oarchive<Archive>;
+        friend class detail::interface_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >;
+        friend class basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >;
         friend class save_access;
     #endif
 #endif
     template<class T>
     void save_override(T & t){
-        this->basic_binary_oarchive<Archive>::save_override(t);
+        this->basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >::save_override(t);
     }
     void init(unsigned int flags) {
         if(0 != (flags & no_header)){
             return;
         }
         #if ! defined(__MWERKS__)
-            this->basic_binary_oarchive<Archive>::init();
-            this->basic_binary_oprimitive<Archive, Elem, Tr>::init();
+            this->basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >::init();
+            this->basic_binary_oprimitive<binary_oarchive_impl<Archive, Elem, Tr>, Elem, Tr>::init();
         #else
-            basic_binary_oarchive<Archive>::init();
-            basic_binary_oprimitive<Archive, Elem, Tr>::init();
+            basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >::init();
+            basic_binary_oprimitive<binary_oarchive_impl<Archive, Elem, Tr>, Elem, Tr>::init();
         #endif
     }
     binary_oarchive_impl(
         std::basic_streambuf<Elem, Tr> & bsb, 
         unsigned int flags
     ) :
-        basic_binary_oprimitive<Archive, Elem, Tr>(
+        basic_binary_oprimitive<binary_oarchive_impl<Archive, Elem, Tr>, Elem, Tr>(
             bsb, 
             0 != (flags & no_codecvt)
         ),
-        basic_binary_oarchive<Archive>(flags)
+        basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >(flags)
     {
         init(flags);
     }
@@ -86,11 +86,11 @@ protected:
         std::basic_ostream<Elem, Tr> & os, 
         unsigned int flags
     ) :
-        basic_binary_oprimitive<Archive, Elem, Tr>(
+        basic_binary_oprimitive<binary_oarchive_impl<Archive, Elem, Tr>, Elem, Tr>(
             * os.rdbuf(), 
             0 != (flags & no_codecvt)
         ),
-        basic_binary_oarchive<Archive>(flags)
+        basic_binary_oarchive<binary_oarchive_impl<Archive, Elem, Tr> >(flags)
     {
         init(flags);
     }

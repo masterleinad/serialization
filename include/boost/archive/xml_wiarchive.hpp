@@ -52,14 +52,14 @@ typedef basic_xml_grammar<wchar_t> xml_wgrammar;
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE xml_wiarchive_impl : 
     public basic_text_iprimitive<std::wistream>,
-    public basic_xml_iarchive<Archive>
+    public basic_xml_iarchive<xml_wiarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
 #else
 protected:
-    friend class detail::interface_iarchive<Archive>;
-    friend class basic_xml_iarchive<Archive>;
+    friend class detail::interface_iarchive<xml_wiarchive_impl<Archive> >;
+    friend class basic_xml_iarchive<xml_wiarchive_impl<Archive> >;
     friend class load_access;
 #endif
     std::locale archive_locale;
@@ -98,7 +98,7 @@ protected:
     #endif
     template<class T>
     void load_override(T & t){
-        basic_xml_iarchive<Archive>::load_override(t);
+        basic_xml_iarchive<xml_wiarchive_impl<Archive> >::load_override(t);
     }
     BOOST_WARCHIVE_DECL void
     load_override(class_name_type & t);

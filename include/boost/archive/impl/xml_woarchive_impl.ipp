@@ -122,7 +122,7 @@ xml_woarchive_impl<Archive>::xml_woarchive_impl(
         os_,
         true // don't change the codecvt - use the one below
     ),
-    basic_xml_oarchive<Archive>(flags)
+    basic_xml_oarchive<xml_woarchive_impl<Archive> > (flags)
 {
     if(0 == (flags & no_codecvt)){
         archive_locale = std::locale(

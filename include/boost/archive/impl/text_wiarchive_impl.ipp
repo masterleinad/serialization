@@ -106,10 +106,10 @@ text_wiarchive_impl<Archive>::text_wiarchive_impl(
         is, 
         0 != (flags & no_codecvt)
     ),
-    basic_text_iarchive<Archive>(flags)
+    basic_text_iarchive<text_wiarchive_impl<Archive> >(flags)
 {
     if(0 == (flags & no_header))
-        basic_text_iarchive<Archive>::init();
+        basic_text_iarchive<text_wiarchive_impl<Archive> >::init();
 }
 
 } // archive

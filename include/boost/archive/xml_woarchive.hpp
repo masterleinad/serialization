@@ -54,14 +54,14 @@ namespace detail {
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE xml_woarchive_impl :
     public basic_text_oprimitive<std::wostream>,
-    public basic_xml_oarchive<Archive>
+    public basic_xml_oarchive<xml_woarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
 #else
 protected:
-    friend class detail::interface_oarchive<Archive>;
-    friend class basic_xml_oarchive<Archive>;
+    friend class detail::interface_oarchive<xml_woarchive_impl<Archive> >;
+    friend class basic_xml_oarchive<xml_woarchive_impl<Archive> >;
     friend class save_access;
 #endif
     //void end_preamble(){

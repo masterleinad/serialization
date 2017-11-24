@@ -23,13 +23,18 @@
 namespace boost {
 namespace archive {
 
-template class detail::archive_serializer_map<binary_oarchive>;
-template class basic_binary_oprimitive<
-    binary_oarchive, 
-    std::ostream::char_type, 
-    std::ostream::traits_type
+template class detail::archive_serializer_map<binary_oarchive_impl<binary_oarchive,
+                                                                   std::ostream::char_type,
+                                                                   std::ostream::traits_type> >;
+template class basic_binary_oprimitive<binary_oarchive_impl<binary_oarchive,
+                                                            std::ostream::char_type,
+                                                            std::ostream::traits_type>, 
+                                       std::ostream::char_type, 
+                                       std::ostream::traits_type
 >;
-template class basic_binary_oarchive<binary_oarchive> ;
+template class basic_binary_oarchive<binary_oarchive_impl<binary_oarchive,
+                                                          std::ostream::char_type,
+                                                          std::ostream::traits_type> >;
 template class binary_oarchive_impl<
     binary_oarchive, 
     std::ostream::char_type, 

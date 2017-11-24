@@ -46,7 +46,7 @@ namespace detail {
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE text_wiarchive_impl :
     public basic_text_iprimitive<std::wistream>,
-    public basic_text_iarchive<Archive>
+    public basic_text_iarchive<text_wiarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
@@ -55,10 +55,10 @@ protected:
     #if BOOST_WORKAROUND(BOOST_MSVC, < 1500)
         // for some inexplicable reason insertion of "class" generates compile erro
         // on msvc 7.1
-        friend detail::interface_iarchive<Archive>;
+        friend detail::interface_iarchive<text_wiarchive_impl<Archive> >;
         friend load_access;
     #else
-        friend class detail::interface_iarchive<Archive>;
+        friend class detail::interface_iarchive<text_wiarchive_impl<Archive> >;
         friend class load_access;
     #endif
 #endif
@@ -90,7 +90,7 @@ protected:
     #endif
     template<class T>
     void load_override(T & t){
-        basic_text_iarchive<Archive>::load_override(t);
+        basic_text_iarchive<text_wiarchive_impl<Archive> >::load_override(t);
     }
     BOOST_WARCHIVE_DECL 
     text_wiarchive_impl(std::wistream & is, unsigned int flags);

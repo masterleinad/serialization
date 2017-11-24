@@ -54,7 +54,7 @@ namespace detail {
 template<class Archive>
 class BOOST_SYMBOL_VISIBLE text_woarchive_impl :
     public basic_text_oprimitive<std::wostream>,
-    public basic_text_oarchive<Archive>
+    public basic_text_oarchive<text_woarchive_impl<Archive> >
 {
 #ifdef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
 public:
@@ -63,12 +63,12 @@ protected:
     #if BOOST_WORKAROUND(BOOST_MSVC, < 1500)
         // for some inexplicable reason insertion of "class" generates compile erro
         // on msvc 7.1
-        friend detail::interface_oarchive<Archive>;
-        friend basic_text_oarchive<Archive>;
+        friend detail::interface_oarchive<text_woarchive_impl<Archive> >;
+        friend basic_text_oarchive<text_woarchive_impl<Archive> >;
         friend save_access;
     #else
-        friend class detail::interface_oarchive<Archive>;
-        friend class basic_text_oarchive<Archive>;
+        friend class detail::interface_oarchive<text_woarchive_impl<Archive> >;
+        friend class basic_text_oarchive<text_woarchive_impl<Archive> >;
         friend class save_access;
     #endif
 #endif
@@ -100,10 +100,10 @@ protected:
             os, 
             0 != (flags & no_codecvt)
         ),
-        basic_text_oarchive<Archive>(flags)
+        basic_text_oarchive<text_woarchive_impl<Archive> >(flags)
     {
         if(0 == (flags & no_header))
-            basic_text_oarchive<Archive>::init();
+            basic_text_oarchive<text_woarchive_impl<Archive> >::init();
     }
 public:
     void save_binary(const void *address, std::size_t count){

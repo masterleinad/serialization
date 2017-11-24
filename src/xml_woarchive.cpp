@@ -31,7 +31,7 @@ namespace boost {
 namespace archive {
 
 template class detail::archive_serializer_map<xml_woarchive>;
-template class basic_xml_oarchive<xml_woarchive> ;
+template class basic_xml_oarchive<xml_woarchive_impl<xml_woarchive> >;
 template class xml_woarchive_impl<xml_woarchive> ;
 
 } // namespace archive
