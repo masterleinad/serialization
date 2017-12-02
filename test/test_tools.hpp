@@ -1,6 +1,8 @@
 #ifndef BOOST_SERIALIZATION_TEST_TOOLS_HPP
 #define BOOST_SERIALIZATION_TEST_TOOLS_HPP
 
+#include <boost/utility.hpp> 
+
 // MS compatible compilers support #pragma once
 #if defined(_MSC_VER)
 # pragma once
